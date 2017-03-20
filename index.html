@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Items for Sale App</title>
+<link rel="stylesheet" href="static/css/bootstrap.min.css">
+<link rel="stylesheet" href="static/css/jquery-ui.min.css">
+<style>
+.form-control {
+	margin-bottom: 10px;
+}
+
+.btn-danger {
+	margin-top: 8px;
+}
+</style>
+</head>
+<body>
+	<nav class="navbar navbar-inverse" role="navigation">
+		<div class="container-fluid">
+			<a class="navbar-brand navbar-header"><i
+				class="glyphicon glyphicon-bullhorn"></i> Items for Sale</a>
+		</div>
+	</nav>
+
+	<div class="container" id="items">
+		<div class="col-sm-6">
+			<div class="panel panel-info">
+				<div class="panel-heading">
+					<h3>Add an Item</h3>
+				</div>
+				<div class="panel-body">
+					<ul id="errors" class="errors alert alert-warning" v-show="!validation.name||!validation.price||!validation.quantity">
+				    	<li v-show="!validation.name">Please provide a Item Name.</li>
+				    	<li v-show="!validation.price">Please provide a valid price in number.</li>
+				 		<li v-show="!validation.quantity">Please provide a valid quanity in number.</li>
+				   </ul>
+					<div>
+						<input class="form-control" placeholder="Item Name"
+							v-model="item.name" required> 
+						<input class="form-control"	placeholder="Price" 
+							v-model="item.price"  type="number" step="any">
+						<textarea class="form-control" placeholder="Item Description"
+							v-model="item.description"></textarea>
+						<input type="number" class="form-control" placeholder="Quantity"
+							v-model="item.quantity">
+						<input class="form-control" type="date"
+							placeholder="Date Available" v-model="item.dateavailable"> 
+						<button class="btn btn-primary" v-on:click="addItem">Submit</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-6">
+			<div class="list-group">
+				<a href="#" class="list-group-item" v-for="item in items">
+					<div class="panel panel-success">
+						<div class="panel-heading">
+							<div class="row">
+								<div class="col-sm-8">
+									<h3 class="list-group-item-heading">{{ item.name }}</h3>
+								</div>
+								<div class="col-sm-4 text-right">
+									<h4><span class="label label-success">${{ item.price }}</span></h4>
+								</div>
+							</div>
+						</div>
+
+						<div class="panel-body">
+
+							<p class="list-group-item-text" v-if="item.description">{{
+								item.description }}</p>
+							<h5>Quantity Available:{{ item.quantity }}</h5>
+							<h5><i class="glyphicon glyphicon-calendar"></i> Date Available: {{ item.dateavailable }}</h5>
+							
+							<button class="btn btn-xs btn-danger"
+								v-on:click="deleteItem($index)">Delete</button>
+						</div>
+					</div>
+				</a>
+			</div>
+		</div>
+	</div>
+	<script src="static/js/vue.js"></script>
+	<script src="static/js/app.js"></script>
+</body>
+</html>
